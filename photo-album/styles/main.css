@@ -1,0 +1,26 @@
+@import './loader.css';
+@import './container.css';
+
+:root {
+	font-size: 16px;
+	--firstColor: #e5ebf133;
+	--secondColor: #66b4f7;
+}
+
+body {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	background-image: linear-gradient(
+		135deg,
+		var(--firstColor) 0%,
+		var(--secondColor) 100%
+	);
+	min-height: 100vh;
+}
