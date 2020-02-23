@@ -2,6 +2,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	z-index: 2;
 }
 
 .loader > span {
@@ -20,6 +21,11 @@
 .loader > span:nth-child(3) {
 	background-color: palevioletred;
 	animation-delay: 0.4s;
+}
+
+.loader[inactive] {
+	display: none;
+	opacity: 0;
 }
 
 @keyframes bounce {

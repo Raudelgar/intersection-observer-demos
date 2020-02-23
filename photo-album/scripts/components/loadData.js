@@ -1,38 +1,27 @@
+import { secret } from '../../../env.js'; //this souldn't be done here, due security risks
+import storage from './storage.js';
+
 export default async function loadData() {
-	const url = 'https://source.unsplash.com/random';
-
-	let imageUrls = await getImages(url);
-
-	console.log({ imageUrls, done: true });
-	return { imageUrls, done: true };
-}
-
-async function* fetchingGenerator(url) {
-	//load 12 images, but render only 6 at a time
-	for (let i = 0; i < 12; i++) {
-		//waiting 0.5sec between each fetch
-		await new Promise(resolve => setTimeout(resolve, 500));
-		yield fetch(url);
-	}
-}
-
-async function getImages(url) {
-	let promises = [];
+	const url = new URL('https://api.unsplash.com/search/photos');
+	url.searchParams.append(secret.key, secret.val);
+	url.searchParams.append('page', storage.getPage());
+	url.searchParams.append('query', 'animal');
 
 	try {
-		const generator = fetchingGenerator(url);
-		for await (let p of generator) {
-			promises.push(p);
-		}
+		let response = await fetch(url);
+		let data = await response.json();
 
-		let response = await Promise.all(promises);
-
-		return response.map(res => {
-			if (res.ok && res.status >= 200 && res.status < 300) {
-				return res.url;
-			}
+		//transforming data
+		return data.results.map(d => {
+			return {
+				title: d.alt_description,
+				desc: d.description,
+				url: d.urls.full
+			};
 		});
 	} catch (error) {
-		console.log('Error getting request from fetch', error);
+		console.log('Error loading data', error);
 	}
 }
+
+//setcookie('cross-site-cookie', 'name', ['samesite' => 'None', 'secure' => true]);

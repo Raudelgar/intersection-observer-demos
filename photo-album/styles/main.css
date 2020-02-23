@@ -1,10 +1,18 @@
 @import './loader.css';
 @import './container.css';
+@import './picture.css';
 
 :root {
+	margin: 0;
+	padding: 0;
 	font-size: 16px;
 	--firstColor: #e5ebf133;
 	--secondColor: #66b4f7;
+}
+
+p {
+	margin: 0;
+	padding: 0;
 }
 
 body {
@@ -15,6 +23,8 @@ body {
 	align-items: center;
 	margin: 0;
 	padding: 0;
+	top: 0;
+	left: 0;
 	box-sizing: border-box;
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
 	background-image: linear-gradient(
@@ -23,4 +33,37 @@ body {
 		var(--secondColor) 100%
 	);
 	min-height: 100vh;
+}
+
+#root {
+	display: none;
+	width: 100%;
+	height: auto;
+}
+
+#footer {
+	position: absolute;
+	bottom: 0;
+	background-color: transparent;
+	width: 100%;
+	height: 1px;
+}
+
+body[load] {
+	display: block;
+	background: #333;
+}
+
+#root[load] {
+	display: block;
+}
+
+#root[re-load] {
+	opacity: 0.2;
+}
+
+@media (min-width: 600px) {
+	:root {
+		font-size: 10px;
+	}
 }
